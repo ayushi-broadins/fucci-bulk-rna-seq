@@ -1,0 +1,24 @@
+paths:
+  datadir: ../data/
+  resultdir: ../results/exp01/
+  logdir: ../log/
+  scriptdir: /chembio/datasets/csdev/AA/betacellproliferation/rnaseq_fucci/scripts/
+  genomefastafile: ../tools/star_index/GRCh38.primary_assembly.genome.fa
+  genomeannotationfile: ../tools/star_index/gencode.v35.primary_assembly.annotation.gtf
+  starindexdir: ../tools/star_index/GRCh38_gencodev35anno/
+  tmpdir: ../tmp/
+
+samples:
+    DoubleNeg1: fastq/exp01/DoubleNeg1
+    DoubleNeg2: fastq/exp01/DoubleNeg2
+    DoublePos1: fastq/exp01/DoublePos1
+    DoublePos2: fastq/exp01/DoublePos2
+    Green1: fastq/exp01/Green1
+    Green2: fastq/exp01/Green2
+    Green3: fastq/exp01/Green3
+    Orange1: fastq/exp01/Orange1
+    Orange2: fastq/exp01/Orange2
+    Orange3: fastq/exp01/Orange3
+
+seq:
+  strand: 'both'
