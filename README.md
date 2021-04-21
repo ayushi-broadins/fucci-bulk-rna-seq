@@ -7,6 +7,8 @@ Snakemake contains a feature called 'profiles', for easy exchange of
 configuration presets for running in a certain environment. This repository 
 contains a snakemake bulk RNA-seq analysis pipeline to run on the Broad's UGER cluster.
 
+<img src="https://github.com/ayushi-broadins/fucci-bulk-rna-seq/bulk_rna_seq_pipeline.png" width="300">
+
 [snakemake]: https://snakemake.readthedocs.io/
 
 Installation
@@ -40,7 +42,7 @@ experimental factor. This tool takes as input a table of raw counts.
 
 1. To install RStudio and R, please follow the instructions [here][hr].
 [hr]: https://uvastatlab.github.io/phdplus/installR.html
-2. To install DESeq2, please follow the instructions below:
+2. Open RStudio and install DESeq2 using the instructions below:
 ```R
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
@@ -65,9 +67,11 @@ ssh login
 # connect to session [number].
 tmux
 cd scripts/
+use Anaconda
 source activate ../tools/snakemake
-use UGER
+# The below command will run all the steps in the pipeline
+# up until the alignment by STAR.
 snakemake --profile broad-uger --cluster-config cluster.json
 
 ```
-3. sdgkhfjsk
+3. Open R Studio 
