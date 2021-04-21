@@ -1,0 +1,111 @@
+import os
+
+configfile: '../parameters/config.yaml'
+
+#define global variables
+DATADIR = config['paths']['datadir']
+RESULTDIR = config['paths']['resultdir']
+LOGDIR = config['paths']['logdir']
+SCRIPTDIR = config['paths']['scriptdir']
+QC_DONE_FILES = expand(RESULTDIR + 
+    '1_qc/{sample}_{num}_001_fastqc.html', sample=config['samples'], num=['R1', 'R2'])
+TRIM_DONE_FILES = expand(RESULTDIR + 
+    '2_trim/{sample}_{num}_paired.fq.gz', sample=config['samples'], num=['R1', 'R2'])
+QC_POST_TRIM_DONE_FILES = expand(RESULTDIR + 
+    '3_qc_post_trim/{sample}_{num}_paired_fastqc.html', sample=config['samples'], num=['R1', 'R2'])
+STAR_INDEX_DONE_FILES = config['paths']['starindexdir'] + 'chrNameLength.txt'
+ALIGN_DONE_FILES = expand(RESULTDIR + 
+    '4_align/{sample}/Aligned.sortedByCoord.out.bam', sample=config['samples'])
+
+
+#the rule to keep track of all the jobs run
+rule all:
+    input:
+        #COUNTS_FILE
+        QC_DONE_FILES + TRIM_DONE_FILES + QC_POST_TRIM_DONE_FILES + ALIGN_DONE_FILES
+
+
+#initial QC of the fastq files
+rule fastqc:
+    input:
+        sample=lambda wildcards: DATADIR + f"{config['samples'][wildcards.sample]}_{wildcards.num}_001.fastq.gz"
+    output:
+        html=RESULTDIR + "1_qc/{sample}_{num}_001_fastqc.html",
+        zipfile=RESULTDIR + "1_qc/{sample}_{num}_001_fastqc.zip"
+    log: LOGDIR + '{sample}.{num}.fastqc.log'
+    resources: mem_mb=5
+    shell:
+        os.path.abspath(SCRIPTDIR) + '/qc.sh ' + os.path.abspath(RESULTDIR) + '/1_qc/' + ' {input.sample}'
+
+
+#trim the Illumina adapters from the fastq files
+rule trim_adapters:
+    input:
+        r1=lambda wildcards: DATADIR + f"{config['samples'][wildcards.sample]}_R1_001.fastq.gz",
+        r2=lambda wildcards: DATADIR + f"{config['samples'][wildcards.sample]}_R2_001.fastq.gz"
+    output: 
+        r1=RESULTDIR + "2_trim/{sample}_R1_paired.fq.gz",
+        r2=RESULTDIR + "2_trim/{sample}_R2_paired.fq.gz",
+        r1_unpaired=RESULTDIR + "2_trim/{sample}_R1_unpaired.fq.gz",
+        r2_unpaired=RESULTDIR + "2_trim/{sample}_R2_unpaired.fq.gz"
+    log: LOGDIR + '{sample}.trim.log'
+    resources: mem_mb=10
+    shell:
+        os.path.abspath(SCRIPTDIR) + 
+        '/trim.sh ' + 
+        '{input.r1} {input.r2} {output.r1} {output.r1_unpaired} {output.r2} {output.r2_unpaired}'
+
+
+#QC if fastqs post trimming
+rule fastqc_post_trim:
+    input:
+        sample=lambda wildcards: RESULTDIR + '2_trim/' + f"{wildcards.sample}_{wildcards.num}_paired.fq.gz"
+    output:
+        # Output needs to end in '_fastqc.html' for multiqc to work
+        html=RESULTDIR + "3_qc_post_trim/{sample}_{num}_paired_fastqc.html",
+        zipfile=RESULTDIR + "3_qc_post_trim/{sample}_{num}_paired_fastqc.zip"
+    log: LOGDIR + '{sample}.{num}.fastqc_post_trim.log'
+    resources: mem_mb=10
+    shell:
+        os.path.abspath(SCRIPTDIR) + 
+        '/qc.sh ' + 
+        os.path.abspath(RESULTDIR) + '/3_qc_post_trim/' + ' {input.sample}'
+
+
+#build the star index
+rule create_star_index:
+    input:
+        genomefa=config['paths']['genomefastafile'],
+        genomegtf=config['paths']['genomeannotationfile']
+    output: config['paths']['starindexdir'] + 'chrNameLength.txt'
+    log: LOGDIR + 'create_star_index.log'
+    resources: mem_mb=100
+    params:
+        genomedir=config['paths']['starindexdir']
+    shell:
+        os.path.abspath(SCRIPTDIR) + 
+        '/starindex.sh ' + 
+        '{input.genomefa} {input.genomegtf} {params.genomedir}'
+
+
+#align the trimmed reads to the genome
+rule star_align:
+    input:
+        fq1=lambda wildcards: RESULTDIR + '2_trim/' + f"{wildcards.sample}_R1_paired.fq.gz",
+        fq2=lambda wildcards: RESULTDIR + '2_trim/' + f"{wildcards.sample}_R2_paired.fq.gz"
+    output: 
+        bam = RESULTDIR + "4_align/{sample}/Aligned.sortedByCoord.out.bam",
+        counts = RESULTDIR + "4_align/{sample}/ReadsPerGene.out.tab",
+        sj = RESULTDIR + "4_align/{sample}/SJ.out.tab",
+        log = RESULTDIR + "4_align/{sample}/Log.final.out"
+    log: LOGDIR + '{sample}.star_align.log'
+    resources: 
+        mem_mb=60
+    params:
+        genomedir=config['paths']['starindexdir'],
+        outprefix=os.path.abspath(RESULTDIR) + "/4_align/{sample}/"
+    threads: 1
+    shell:
+        os.path.abspath(SCRIPTDIR) + 
+        '/align.sh ' + 
+        '{threads} {params.genomedir} {input.fq1} {input.fq2} {params.outprefix}'
