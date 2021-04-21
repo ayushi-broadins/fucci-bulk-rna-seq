@@ -2,7 +2,7 @@ paths:
   datadir: ../data/
   resultdir: ../results/exp01/
   logdir: ../log/
-  scriptdir: /chembio/datasets/csdev/AA/betacellproliferation/rnaseq_fucci/scripts/
+  scriptdir: /scripts/
   genomefastafile: ../tools/star_index/GRCh38.primary_assembly.genome.fa
   genomeannotationfile: ../tools/star_index/gencode.v35.primary_assembly.annotation.gtf
   starindexdir: ../tools/star_index/GRCh38_gencodev35anno/
