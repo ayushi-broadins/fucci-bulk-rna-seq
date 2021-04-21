@@ -56,7 +56,7 @@ rule trim_adapters:
         '{input.r1} {input.r2} {output.r1} {output.r1_unpaired} {output.r2} {output.r2_unpaired}'
 
 
-#QC if fastqs post trimming
+#QC of fastq files post trimming
 rule fastqc_post_trim:
     input:
         sample=lambda wildcards: RESULTDIR + '2_trim/' + f"{wildcards.sample}_{wildcards.num}_paired.fq.gz"
