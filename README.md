@@ -1,11 +1,3 @@
-# fucci-bulk-rna-seq
-Snakemake was used to buikd the bulk RNA-seq analysis pipeline for the bulk RNA-seq data from sorted FUCCI cells.
-
-Installation:
-To be able to run these scripts, the following setup is required:
-
-1. 
-
 Bulk RNA-seq analysis pipeline with Snakemake for Broad Institute UGER cluster
 ======================================================================================
 
@@ -21,10 +13,14 @@ Installation
 ------------
 
 ### Setting up snakemake profile for Broad Institute UGER cluster
-Please follow the instructions on the Broad Institute github page (https://github.com/broadinstitute/snakemake-broad-uger/blob/master/README.md) to set up the snakemake profile.
+Please follow the instructions on the Broad Institute github page 
+(https://github.com/broadinstitute/snakemake-broad-uger/blob/master/README.md) to set up the 
+snakemake profile.
 
 ### Preparing a conda environment
-The recommended way to run the analysis in this repository is to setup a conda environment, where the package versions of the tools used can be controlled. For a windows machine, please follow the below installation instructions on the Broad cluster.
+The recommended way to run the analysis in this repository is to setup a conda environment, 
+where the package versions of the tools used can be controlled. For a windows machine, 
+please follow the below installation instructions on the Broad cluster.
 
 ```bash
 use Anaconda3
