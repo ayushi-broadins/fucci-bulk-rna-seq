@@ -38,8 +38,8 @@ experimental factor. This tool takes as input a table of raw counts.
 
 [deseq2]: http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
 
-1. To install RStudio and R, please follow the instructions .[here].[hr].
-.[hr]: https://uvastatlab.github.io/phdplus/installR.html
+1. To install RStudio and R, please follow the instructions [here][hr].
+[hr]: https://uvastatlab.github.io/phdplus/installR.html
 2. To install DESeq2, please follow the instructions below:
 ```R
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -51,3 +51,23 @@ BiocManager::install("DESeq2")
 Using the pipeline
 ------------------------
 We're ready to go! To start the snalysis:
+1. Update the config file parameters/config.yaml to ensure it has the right paths 
+   and sample names.
+3. Connect to the Broad login host
+
+```bash
+ssh login
+
+# tmux command will keep your code running even if you disconnect
+# To disconnect from the session, press CTRL+b, release both keys 
+# and then press d. On the original login shell, type tmux a to reconnect 
+# to your session, tmux ls to list all sessions, and tmux a -t [number] to 
+# connect to session [number].
+tmux
+cd scripts/
+source activate ../tools/snakemake
+use UGER
+snakemake --profile broad-uger --cluster-config cluster.json
+
+```
+3. sdgkhfjsk
