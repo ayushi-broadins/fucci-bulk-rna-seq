@@ -54,10 +54,10 @@ BiocManager::install("DESeq2")
 
 Using the pipeline
 ------------------------
-We're ready to go! To start the snalysis:
+We're ready to go! To start the analysis:
 1. Update the config file parameters/config.yaml to ensure it has the right paths 
    and sample names.
-3. Connect to the Broad login host
+2. Connect to the Broad login host
 
 ```bash
 ssh login
@@ -76,4 +76,6 @@ source activate ../tools/snakemake
 snakemake --profile broad-uger --cluster-config cluster.json
 
 ```
-3. Open R Studio 
+3. Once the snakemake jobs are completed successfully, open R Studio. Load the script: /scripts/r/de.analysis.R
+4. Set the working directory as /scripts/r/ using R command setwd("/scripts/r/")
+6. Select all lines in the script and click on the 'Run' button at the top corner of your source window in RStudio.
