@@ -13,9 +13,10 @@ Installation
 ------------
 
 ### Setting up snakemake profile for Broad Institute UGER cluster
-Please follow the instructions on the Broad Institute github page 
-(https://github.com/broadinstitute/snakemake-broad-uger/blob/master/README.md) to set up the 
+Please follow the instructions on the Broad Institute [GitHub page][gp] to set up the 
 snakemake profile.
+
+[gp]: https://github.com/broadinstitute/snakemake-broad-uger/blob/master/README.md
 
 ### Preparing a conda environment
 The recommended way to run the analysis in this repository is to setup a conda environment, 
@@ -37,4 +38,16 @@ experimental factor. This tool takes as input a table of raw counts.
 
 [deseq2]: http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
 
+1. To install RStudio and R, please follow the instructions .[here].[hr].
+.[hr]: https://uvastatlab.github.io/phdplus/installR.html
+2. To install DESeq2, please follow the instructions below:
+```R
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("DESeq2")
+```
 
+
+Using the pipeline
+------------------------
+We're ready to go! To start the snalysis:
