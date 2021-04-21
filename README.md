@@ -7,7 +7,7 @@ Snakemake contains a feature called 'profiles', for easy exchange of
 configuration presets for running in a certain environment. This repository 
 contains a snakemake bulk RNA-seq analysis pipeline to run on the Broad's UGER cluster.
 
-<img src="https://github.com/ayushi-broadins/fucci-bulk-rna-seq/bulk_rna_seq_pipeline.png" width="300">
+<img src="https://github.com/ayushi-broadins/fucci-bulk-rna-seq/bulk_rna_seq_pipeline.png" >
 
 [snakemake]: https://snakemake.readthedocs.io/
 
