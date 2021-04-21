@@ -1,34 +1,26 @@
 #load the required packages and functions
-source(paste0("//hydrogen/chembio_datasets/csdev/",
-              "AA/betacellproliferation/rnaseq_fucci/",
-              "scripts/r/prepare.counts.for.de.new.R"))
-source(paste0("//hydrogen/chembio_datasets/csdev/",
-              "AA/betacellproliferation/rnaseq_fucci/",
-              "scripts/r/prepare.metadata.for.de.R"))
-source(paste0("//hydrogen/chembio_datasets/csdev/",
-              "AA/betacellproliferation/rnaseq_fucci/",
-              "scripts/r/get.gene.annotations.R"))
+source("prepare.counts.for.de.R")
+source("prepare.metadata.for.de.R")
+source("get.gene.annotations.R")
 library(DESeq2) #v1.28.1 
 library(ggplot2) #v3.3.3
 library("vsn") #3.56.0
 library("pheatmap") #1.0.12
 library("RColorBrewer")
-setwd(paste0("//hydrogen/chembio_datasets/csdev/",
-             "AA/betacellproliferation/rnaseq_fucci/",
-             "results/exp01/5_count/"))
+setwd(paste0("../../results/",
+             "exp01/5_count/"))
 
 #---------------------------------------------------------------#
 
 #prepare count matrix and metadata
-count.mat <- prep_count(paste0("//hydrogen/chembio_datasets/proj/bcproli/rnaseq/bulk/results/exp01/5_de/",
+count.mat <- prep_count(paste0("../../results/exp01/5_de/",
                                   "/data/counts.txt"))
 meta.sample <- prep_metadata(count.mat,"dn")
 
 
 #get gene annotations
-gene.names <- get_gene_label(paste0("//hydrogen/chembio_datasets/csdev/",
-                                    "AA/betacellproliferation/rnaseq_fucci/",
-                                    "results/exp01/5_count/data/counts.txt"))
+gene.names <- get_gene_label(paste0("../../results/",
+                                    "exp01/5_count/data/counts.txt"))
 
 outfile <- "data/read.counts.gene.deseq2.Rdata"
 
