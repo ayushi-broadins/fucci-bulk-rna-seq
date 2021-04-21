@@ -1,0 +1,30 @@
+{
+    "__default__" :
+    {
+        "runtime" : "01:00:00"
+    },
+    "fastqc" :
+    {
+        "runtime" : "01:00:00"
+    },
+    "trim_adapters":
+    {
+        "runtime" : "02:00:00"
+    },
+    "fastqc_post_trim" :
+    {
+        "runtime" : "01:00:00"
+    },
+    "create_star_index" :
+    {
+        "runtime" : "24:00:00"
+    },
+    "star_align" :
+    {
+        "runtime" : "40:00:00"
+    },
+    "parse_star_reads" :
+    {
+        "runtime" : "02:00:00"
+    }
+}
