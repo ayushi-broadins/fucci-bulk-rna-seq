@@ -16,6 +16,12 @@ This pipeline uses the tools as shown in the below graphic.
 Installation
 ------------
 
+### Setting up the folder structure
+The pipeline expects the following folder organization. Please use this as a model to
+set up your working space for the pipeline to work successfully.
+
+<img src="https://github.com/ayushi-broadins/fucci-bulk-rna-seq/blob/3cee77077aa98a96533358882c204469070d6786/bulk_rna_seq_folder_org.PNG">
+
 ### Setting up snakemake profile for Broad Institute UGER cluster
 Please follow the instructions on the Broad Institute [GitHub page][gp] to set up the 
 snakemake profile.
