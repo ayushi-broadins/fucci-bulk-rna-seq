@@ -30,4 +30,11 @@ dos2unix environment.yml
 conda env create -f environment.yml
 
 ```
+### Installing R Studio and DESeq2 package
+[DESeq2][deseq2] is a R Bioconductor package that is used for differential expression analysis. 
+This tool allows you to have more than two experimental groups and account for a second 
+experimental factor. This tool takes as input a table of raw counts. 
+
+[deseq2]: http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+
 
